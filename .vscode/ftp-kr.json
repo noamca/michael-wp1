@@ -1,0 +1,13 @@
+{
+  "host": "ftp.s730.upress.link",
+  "username": "noam@ers-tel.co.il",
+  "password": "XCU@KrMXbDYT5",
+  "remotePath": "/wp-content/themes/ozd-studio/",
+  "protocol": "ftp",
+  "port": 21,
+  "fileNameEncoding": "utf8",
+  "autoUpload": true,
+  "autoDelete": false,
+  "autoDownload": false,
+  "ignore": [".git", "/.vscode"]
+}
