@@ -41,7 +41,7 @@
 	<section id="footer_contact" class="bg_color text-center">
 		<div class="container">
 				<h3 class=""><?php _e("לשליחת הודעה", "ozd-studio"); ?></h3>
-				<?php echo do_shortcode('[cf7-form cf7key="heb"]') ?>					
+				<?php echo do_shortcode('[cf7-form cf7key="heb_copy"]') ?>					
 		</div>
 	</section>
 	

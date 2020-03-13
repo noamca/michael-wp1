@@ -389,4 +389,65 @@ function tax_pre_get_posts( $query ) {
 	$query->set('tax_query', $tax_query );				
 }
 
-// noam
+// Noam's workspace
+
+// This hook catch before send Contact Form 7 and add cc to manager email
+add_action("wpcf7_before_send_mail", "wpcf7_do_add_manager_email");  
+function wpcf7_do_add_manager_email($cf7) {
+    // get the contact form object
+    $currentformInstance  = WPCF7_ContactForm::get_current();
+	$contactformsubmition = WPCF7_Submission::get_instance();
+
+	if ($contactformsubmition) {
+		$mail = $currentformInstance->prop('mail');
+		$cclist = '';
+
+
+
+		// Handle send email to the right managers BY AREA - case of contact form
+        if($_POST['area'] !=''){
+			$cc = array();
+			$form_area = $_POST['area'];
+			$query = new WP_query(array( 'post_type' => 'crew'));
+			while( $query->have_posts() ) {
+				$query->the_post();
+				$manager_areas = get_field('work_area',get_the_ID());
+				var_dump($manager_areas);
+				foreach($manager_areas as $k => $manager_area) {
+					if($manager_area == $form_area) {
+						$cc[] = get_field('crew_email',get_the_ID()); 
+					}
+				}
+				$cclist = implode(",",$cc);
+			}
+		}
+		
+		// Handle send email to the right manager BY MANAGER EMAIL - case of asset form
+		else {
+			
+			if($_POST['manager_email'] !=''){
+				$cclist = $_POST['manager_email'];
+			}
+		}
+		
+		if(!empty($cclist)){
+			$mail['additional_headers'] = "Cc: $cclist";
+		}
+
+		// Save the email body
+		$currentformInstance->set_properties(array(
+			"mail" => $mail
+		));
+
+		// return current cf7 instance
+		return $currentformInstance;
+	}
+}
+
+
+
+
+
+
+
+

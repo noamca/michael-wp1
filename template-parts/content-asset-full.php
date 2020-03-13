@@ -98,7 +98,7 @@
 			<div class="form-header"><?php _e("שלחו הודעה", "ozd-studio"); ?></div>
 			<?php echo do_shortcode('[cf7-form cf7key="heb"]') ?>
 			
-			<script> initContactForm() </script>		
+			<script> initContactForm('<?php echo $manager['email'];?>','<?php echo $post->ID;?>') </script>		
 			
 							
 		</div>
