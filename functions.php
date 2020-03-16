@@ -402,8 +402,6 @@ function wpcf7_do_add_manager_email($cf7) {
 		$mail = $currentformInstance->prop('mail');
 		$cclist = '';
 
-
-
 		// Handle send email to the right managers BY AREA - case of contact form
         if($_POST['area'] !=''){
 			$cc = array();
@@ -412,7 +410,6 @@ function wpcf7_do_add_manager_email($cf7) {
 			while( $query->have_posts() ) {
 				$query->the_post();
 				$manager_areas = get_field('work_area',get_the_ID());
-				var_dump($manager_areas);
 				foreach($manager_areas as $k => $manager_area) {
 					if($manager_area == $form_area) {
 						$cc[] = get_field('crew_email',get_the_ID()); 
@@ -443,6 +440,23 @@ function wpcf7_do_add_manager_email($cf7) {
 		return $currentformInstance;
 	}
 }
+
+///   LOAD Curencies as hourly task
+wp_schedule_event(time(), 'daily', 'get_curencies');
+
+function get_curencies() {
+
+	$curencies = file_get_contents("http://data.fixer.io/api/latest?access_key=846bc398dbd0a5a2f2a0d9a6989a923f");
+	if(!get_option('curecies')) {
+		add_option('curencies',$curencies);
+	}	
+	else {
+		update_option('curencies',$curencies);
+	}
+}
+
+// add_action('init','get_curencies',10);
+
 
 
 

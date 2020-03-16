@@ -98,7 +98,9 @@ function changeCurency(sel){
 		jQuery(theField).attr('value',rate);
 	}
 
-	$.getJSON("https://api.fixer.io/latest", demo);
+	// $.getJSON("https://api.fixer.io/latest", demo);
+	demo(JSON.parse('<?php echo get_option('curencies');?>'));
+
 }
 	
 jQuery(window).load(function() {
